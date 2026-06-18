@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Dashboard — Meteo</title>
   <link rel="stylesheet" href="/css/app.css">
+  <meta name="theme-color" content="#050507">
 </head>
 <body>
   <header class="topbar">
@@ -17,9 +18,8 @@
 
   <main class="container">
     <section class="search">
-      <input id="cityInput" placeholder="Inserisci città o usa geolocalizzazione" />
+      <input id="cityInput" placeholder="Inserisci una città" />
       <button id="searchBtn" class="btn-primary">Cerca</button>
-      <button id="geoBtn" class="btn-secondary">Usa la mia posizione</button>
     </section>
 
     <section id="weatherCard" class="card weather-card">
@@ -33,7 +33,7 @@
     </section>
 
     <section id="forecastSection" class="card forecast-section" style="display:none">
-      <h3>Previsioni Prossimi Giorni</h3>
+      <h3>Previsioni prossimi giorni</h3>
       <div id="forecastGrid" class="forecast-grid"></div>
     </section>
   </main>

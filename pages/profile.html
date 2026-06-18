@@ -2,108 +2,232 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Profilo — Meteo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profilo — MatteDev</title>
   <link rel="stylesheet" href="/css/app.css">
+  <meta name="theme-color" content="#050507">
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand">Profilo</div>
-    <nav>
-      <button id="backBtn" class="link">← Indietro</button>
-    </nav>
-  </header>
+<body class="account-page">
+  <div class="account-shell">
+    <aside class="account-sidebar">
+      <div>
+        <div class="account-sidebar-title">MatteDev</div>
+        <p class="account-sidebar-caption">Gestisci profilo, preferenze meteo e sicurezza da un unico spazio.</p>
+      </div>
 
-  <main class="container">
-    <section class="card">
-      <h2>Profilo Utente</h2>
-      <div class="field">
-        <label>Username</label>
-        <div id="username" class="muted">Caricamento...</div>
+      <nav class="account-nav" aria-label="Sezioni account">
+        <a class="account-nav-link is-active" href="#profilo">Profilo</a>
+        <a class="account-nav-link" href="#preferenze">Preferenze</a>
+        <a class="account-nav-link" href="#sicurezza">Sicurezza</a>
+      </nav>
+
+      <div class="account-sidebar-footer">
+        <a class="account-back" href="/dashboard.html">Torna alla dashboard</a>
       </div>
-      <div class="field">
-        <label>Email</label>
-        <div id="email" class="muted">Caricamento...</div>
+    </aside>
+
+    <main class="account-main">
+      <div class="account-topbar">
+        <div>
+          <a class="account-back account-back-mobile" href="/dashboard.html">← Indietro</a>
+          <h1 class="account-title">Gestione account</h1>
+          <p class="account-subtitle">Aggiorna profilo, preferenze meteo e impostazioni personali in modo rapido anche da mobile.</p>
+        </div>
+
+        <button type="button" id="logoutBtn" class="btn-secondary">Esci</button>
       </div>
-      <div class="field">
-        <label>Città Predefinita</label>
-        <input type="text" id="prefCity" placeholder="Es: Milano" />
-      </div>
-      <div class="field">
-        <label>Unità di Misura</label>
-        <select id="prefUnits">
-          <option value="metric">Celsius (°C)</option>
-          <option value="imperial">Fahrenheit (°F)</option>
-        </select>
-      </div>
-      <div id="msg" class="msg"></div>
-      <div style="margin-top:12px">
-        <button id="savePrefs" class="btn-primary">Salva Preferenze</button>
-        <button id="backBtnAlt" class="btn-secondary">Indietro</button>
-      </div>
-    </section>
-  </main>
+
+      <section class="account-section" id="profilo">
+        <div class="account-panel">
+          <div class="account-panel-head">
+            <div>
+              <h2 class="account-panel-title">Profilo</h2>
+              <p class="account-panel-subtitle">Nome pubblico, immagine e presentazione.</p>
+            </div>
+          </div>
+
+          <div class="profile-preview-box">
+            <img id="profileAvatar" class="profile-preview-avatar" src="" alt="Anteprima profilo">
+            <div class="profile-preview-copy">
+              <div class="profile-preview-title" id="displayUsername">Caricamento...</div>
+              <div class="profile-preview-subtitle" id="displayEmail">Caricamento...</div>
+            </div>
+          </div>
+
+          <div class="account-grid is-spaced">
+            <div class="field">
+              <label for="displayName">Nome visualizzato</label>
+              <input type="text" id="displayName" placeholder="Il tuo nome pubblico">
+            </div>
+
+            <div class="field">
+              <label for="pfpUrl">Immagine profilo</label>
+              <input type="url" id="pfpUrl" placeholder="https://...">
+            </div>
+
+            <div class="field field--wide">
+              <label for="bio">Bio</label>
+              <textarea id="bio" placeholder="Racconta qualcosa di te"></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="account-section" id="preferenze">
+        <div class="account-panel">
+          <div class="account-panel-head">
+            <div>
+              <h2 class="account-panel-title">Preferenze</h2>
+              <p class="account-panel-subtitle">Impostazioni usate dalla dashboard meteo.</p>
+            </div>
+          </div>
+
+          <div class="account-grid">
+            <div class="field">
+              <label for="prefCity">Città predefinita</label>
+              <input type="text" id="prefCity" placeholder="Es. Milano">
+            </div>
+
+            <div class="field">
+              <label for="prefUnits">Unità di misura</label>
+              <select id="prefUnits">
+                <option value="metric">Celsius (°C)</option>
+                <option value="imperial">Fahrenheit (°F)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="account-section" id="sicurezza">
+        <div class="account-panel">
+          <div class="account-panel-head">
+            <div>
+              <h2 class="account-panel-title">Sicurezza e salvataggio</h2>
+              <p class="account-panel-subtitle">Salva le modifiche quando hai finito di aggiornare i dati.</p>
+            </div>
+          </div>
+
+          <div class="account-actions">
+            <button type="button" id="savePrefs" class="btn-primary">Salva modifiche</button>
+            <a class="btn-secondary account-link-button" href="/dashboard.html">Torna alla dashboard</a>
+          </div>
+
+          <div id="msg" class="msg account-msg" aria-live="polite"></div>
+          <p class="account-hint">Le modifiche vengono salvate su Firestore e aggiornano la dashboard al prossimo accesso.</p>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script type="module">
     import { auth, db } from '/auth.js';
-    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
     import { doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
+    const ui = {
+      profileAvatar: document.getElementById('profileAvatar'),
+      displayUsername: document.getElementById('displayUsername'),
+      displayEmail: document.getElementById('displayEmail'),
+      displayName: document.getElementById('displayName'),
+      pfpUrl: document.getElementById('pfpUrl'),
+      bio: document.getElementById('bio'),
+      prefCity: document.getElementById('prefCity'),
+      prefUnits: document.getElementById('prefUnits'),
+      savePrefs: document.getElementById('savePrefs'),
+      msg: document.getElementById('msg')
+    };
+
+    function avatarUrl(name) {
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'MatteDev')}&background=111827&color=ffffff&bold=true`;
+    }
+
     function showMsg(text, type) {
-      const el = document.getElementById('msg');
-      el.textContent = text;
-      el.className = 'msg ' + type;
-      setTimeout(() => { el.className = 'msg'; }, 3000);
+      if (!ui.msg) return;
+      ui.msg.textContent = text;
+      ui.msg.className = `msg ${type}`;
+    }
+
+    function setAvatarPreview(name, url) {
+      ui.profileAvatar.src = url || avatarUrl(name);
     }
 
     async function loadProfile(user) {
-      try {
-        document.getElementById('username').textContent = user.displayName || user.email?.split('@')[0] || 'Utente';
-        document.getElementById('email').textContent = user.email || '—';
+      const fallbackName = user.displayName || user.email?.split('@')[0] || 'Utente';
+      const prefsRef = doc(db, 'users', user.uid);
+      const snap = await getDoc(prefsRef);
+      const data = snap.exists() ? snap.data() : {};
 
-        const prefsRef = doc(db, 'users', user.uid);
-        const snap = await getDoc(prefsRef);
-        if (snap.exists()) {
-          const data = snap.data();
-          if (data.prefCity) document.getElementById('prefCity').value = data.prefCity;
-          if (data.prefUnits) document.getElementById('prefUnits').value = data.prefUnits;
-        }
-      } catch (err) {
-        console.error(err);
-        showMsg('Errore caricamento profilo', 'error');
-      }
+      const displayName = data.username || user.displayName || fallbackName;
+      const photoURL = data.pfp || user.photoURL || avatarUrl(displayName);
+
+      ui.displayUsername.textContent = displayName;
+      ui.displayEmail.textContent = user.email || 'Email non disponibile';
+      ui.displayName.value = displayName;
+      ui.pfpUrl.value = data.pfp || user.photoURL || '';
+      ui.bio.value = data.bio || '';
+      ui.prefCity.value = data.prefCity || '';
+      ui.prefUnits.value = data.prefUnits || 'metric';
+
+      setAvatarPreview(displayName, photoURL);
     }
 
-    document.getElementById('savePrefs').addEventListener('click', async () => {
-      const user = auth.currentUser;
-      if (!user) return showMsg('Non autenticato', 'error');
+    function refreshPreview() {
+      const name = ui.displayName.value.trim() || ui.displayUsername.textContent || 'Utente';
+      const url = ui.pfpUrl.value.trim();
+      setAvatarPreview(name, url);
+      ui.displayUsername.textContent = name;
+    }
 
-      const prefs = {
-        prefCity: document.getElementById('prefCity').value || '',
-        prefUnits: document.getElementById('prefUnits').value
+    ui.displayName.addEventListener('input', refreshPreview);
+    ui.pfpUrl.addEventListener('input', refreshPreview);
+
+    ui.savePrefs.addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) {
+        showMsg('Non autenticato.', 'error');
+        return;
+      }
+
+      const displayName = ui.displayName.value.trim() || user.email?.split('@')[0] || 'Utente';
+      const photoURL = ui.pfpUrl.value.trim() || avatarUrl(displayName);
+      const payload = {
+        username: displayName,
+        email: user.email || '',
+        pfp: photoURL,
+        bio: ui.bio.value.trim(),
+        prefCity: ui.prefCity.value.trim(),
+        prefUnits: ui.prefUnits.value,
+        uid: user.uid
       };
 
       try {
-        await setDoc(doc(db, 'users', user.uid), prefs, { merge: true });
-        showMsg('Preferenze salvate!', 'success');
+        await setDoc(doc(db, 'users', user.uid), payload, { merge: true });
+        await updateProfile(user, {
+          displayName,
+          photoURL
+        });
+        ui.displayUsername.textContent = displayName;
+        ui.displayEmail.textContent = user.email || 'Email non disponibile';
+        setAvatarPreview(displayName, photoURL);
+        showMsg('Profilo aggiornato con successo.', 'success');
       } catch (err) {
         console.error(err);
-        showMsg('Errore nel salvataggio', 'error');
+        showMsg('Errore durante il salvataggio.', 'error');
       }
     });
 
-    document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '/dashboard.html';
-    });
-    document.getElementById('backBtnAlt').addEventListener('click', () => {
-      window.location.href = '/dashboard.html';
-    });
-
-    onAuthStateChanged(auth, async user => {
-      if (user) {
-        await loadProfile(user);
-      } else {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
         window.location.href = '/pages/login.html';
+        return;
+      }
+
+      try {
+        await loadProfile(user);
+      } catch (err) {
+        console.error(err);
+        showMsg('Errore nel caricamento del profilo.', 'error');
       }
     });
   </script>

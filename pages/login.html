@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — Meteo</title>
+    <title>Login — MatteDev</title>
     <link rel="stylesheet" href="/css/app.css">
-    <meta name="theme-color" content="#0a0a0c">
+    <meta name="theme-color" content="#050507">
 </head>
-<body>
-    <main id="root">
-        <section class="card">
-            <h1 id="authTitle">Bentornato</h1>
-            <p class="subtitle" id="authSub">Accedi col tuo account per continuare.</p>
-
-            <div class="tabs">
-                <button class="tab-btn active" id="tabLogin" onclick="setMode(true)">Accedi</button>
-                <button class="tab-btn" id="tabRegister" onclick="setMode(false)">Registrati</button>
+<body class="auth-page">
+    <main class="page-shell">
+        <section class="auth-card">
+            <div>
+                <h1 class="auth-title" id="authTitle">Bentornato</h1>
+                <p class="auth-subtitle" id="authSub">Accedi al tuo account per continuare.</p>
             </div>
 
-            <div class="fields">
+            <div class="auth-tabs">
+                <button type="button" class="tab-btn active" id="tabLogin" onclick="setMode(true)">Accedi</button>
+                <button type="button" class="tab-btn" id="tabRegister" onclick="setMode(false)">Registrati</button>
+            </div>
+
+            <div class="auth-fields">
                 <div class="field-group hidden" id="usernameWrapper">
                     <label for="username">Username</label>
                     <input type="text" id="username" placeholder="il_tuo_username" autocomplete="username">
@@ -34,16 +36,15 @@
                     <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
                 </div>
 
-                <button class="btn-primary" id="authBtn">Accedi</button>
-
-                <div class="msg" id="authMsg"></div>
+                <button type="button" class="btn-primary auth-submit" id="authBtn">Accedi</button>
+                <div class="msg" id="authMsg" aria-live="polite"></div>
             </div>
 
-            <div class="footer">
+            <div class="auth-footer">
                 <a href="https://privacy.mattedev.com/privacy.html">Privacy Policy</a>
-                <div class="divider"></div>
-                <a href="https://privacy.mattedev.com/terms.html">Termini</a>
-                <div class="divider"></div>
+                <span class="auth-divider"></span>
+                <a href="https://privacy.mattedev.com/terms.html">Termini di Servizio</a>
+                <span class="auth-divider"></span>
                 <a href="mailto:support@mattedev.com">Supporto</a>
             </div>
         </section>
