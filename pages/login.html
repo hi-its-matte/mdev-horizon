@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Meteo</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <meta name="theme-color" content="#0a0a0c">
+</head>
+<body>
+    <main id="root">
+        <section class="card">
+            <h1 id="authTitle">Bentornato</h1>
+            <p class="subtitle" id="authSub">Accedi col tuo account per continuare.</p>
+
+            <div class="tabs">
+                <button class="tab-btn active" id="tabLogin" onclick="setMode(true)">Accedi</button>
+                <button class="tab-btn" id="tabRegister" onclick="setMode(false)">Registrati</button>
+            </div>
+
+            <div class="fields">
+                <div class="field-group hidden" id="usernameWrapper">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="il_tuo_username" autocomplete="username">
+                </div>
+
+                <div class="field-group visible">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="latua@email.com" autocomplete="email">
+                </div>
+
+                <div class="field-group visible">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+                </div>
+
+                <button class="btn-primary" id="authBtn">Accedi</button>
+
+                <div class="msg" id="authMsg"></div>
+            </div>
+
+            <div class="footer">
+                <a href="https://privacy.mattedev.com/privacy.html">Privacy Policy</a>
+                <div class="divider"></div>
+                <a href="https://privacy.mattedev.com/terms.html">Termini</a>
+                <div class="divider"></div>
+                <a href="mailto:support@mattedev.com">Supporto</a>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/auth.js"></script>
+</body>
+</html>

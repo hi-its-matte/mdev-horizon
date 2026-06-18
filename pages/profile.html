@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profilo — Meteo</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Profilo</div>
+    <nav>
+      <button id="backBtn" class="link">← Indietro</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Profilo Utente</h2>
+      <div class="field">
+        <label>Username</label>
+        <div id="username" class="muted">Caricamento...</div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <div id="email" class="muted">Caricamento...</div>
+      </div>
+      <div class="field">
+        <label>Città Predefinita</label>
+        <input type="text" id="prefCity" placeholder="Es: Milano" />
+      </div>
+      <div class="field">
+        <label>Unità di Misura</label>
+        <select id="prefUnits">
+          <option value="metric">Celsius (°C)</option>
+          <option value="imperial">Fahrenheit (°F)</option>
+        </select>
+      </div>
+      <div id="msg" class="msg"></div>
+      <div style="margin-top:12px">
+        <button id="savePrefs" class="btn-primary">Salva Preferenze</button>
+        <button id="backBtnAlt" class="btn-secondary">Indietro</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { auth, db } from '/auth.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    function showMsg(text, type) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'msg ' + type;
+      setTimeout(() => { el.className = 'msg'; }, 3000);
+    }
+
+    async function loadProfile(user) {
+      try {
+        document.getElementById('username').textContent = user.displayName || user.email?.split('@')[0] || 'Utente';
+        document.getElementById('email').textContent = user.email || '—';
+
+        const prefsRef = doc(db, 'users', user.uid);
+        const snap = await getDoc(prefsRef);
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data.prefCity) document.getElementById('prefCity').value = data.prefCity;
+          if (data.prefUnits) document.getElementById('prefUnits').value = data.prefUnits;
+        }
+      } catch (err) {
+        console.error(err);
+        showMsg('Errore caricamento profilo', 'error');
+      }
+    }
+
+    document.getElementById('savePrefs').addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) return showMsg('Non autenticato', 'error');
+
+      const prefs = {
+        prefCity: document.getElementById('prefCity').value || '',
+        prefUnits: document.getElementById('prefUnits').value
+      };
+
+      try {
+        await setDoc(doc(db, 'users', user.uid), prefs, { merge: true });
+        showMsg('Preferenze salvate!', 'success');
+      } catch (err) {
+        console.error(err);
+        showMsg('Errore nel salvataggio', 'error');
+      }
+    });
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = '/dashboard.html';
+    });
+    document.getElementById('backBtnAlt').addEventListener('click', () => {
+      window.location.href = '/dashboard.html';
+    });
+
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        await loadProfile(user);
+      } else {
+        window.location.href = '/pages/login.html';
+      }
+    });
+  </script>
+</body>
+</html>
