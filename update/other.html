@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apri Horizon</title>
+  <link rel="stylesheet" href="../css/app.css" />
+  <style>
+    .update-shell {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 36px);
+    }
+
+    .update-card {
+      width: min(620px, 100%);
+      padding: clamp(24px, 5vw, 40px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .update-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .update-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+    }
+  </style>
+</head>
+<body>
+  <main class="update-shell">
+    <section class="card update-card">
+      <h1 class="auth-title" id="title">Apri la nuova versione di Horizon</h1>
+      <p class="auth-subtitle" id="description">Premi il pulsante qui sotto per aprire l’ultima versione nel browser.</p>
+
+      <div class="update-actions">
+        <a class="btn-primary" id="openLink" href="https://horizon.mattedev.com" target="_blank" rel="noopener noreferrer">Apri Horizon</a>
+        <a class="btn-secondary" href="index.html">Scegli un’altra piattaforma</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const platform = params.get('platform');
+    const title = document.getElementById('title');
+    const description = document.getElementById('description');
+
+    if (platform === 'ios') {
+      title.textContent = 'Apri Horizon su iPhone o iPad';
+      description.textContent = 'Usa il pulsante qui sotto per aprire la nuova versione nel browser e continuare da lì.';
+    } else if (platform === 'pc') {
+      title.textContent = 'Apri Horizon sul tuo computer';
+      description.textContent = 'Usa il pulsante qui sotto per aprire l’ultima versione direttamente nel browser.';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aggiornamento Horizon</title>
+  <link rel="stylesheet" href="../css/app.css" />
+  <style>
+    .update-shell {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 36px);
+    }
+
+    .update-card {
+      width: min(760px, 100%);
+      padding: clamp(24px, 5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .update-title {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: -0.04em;
+    }
+
+    .update-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .update-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .update-option {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .update-option:hover {
+      transform: translateY(-1px);
+      border-color: var(--border-strong);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .update-option strong {
+      font-size: 1rem;
+    }
+
+    .update-option span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .update-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .update-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+    }
+
+    @media (max-width: 720px) {
+      .update-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="update-shell">
+    <section class="card update-card">
+      <h1 class="update-title">Oh, No! la tua versione è troppo vecchia!</h1>
+      <p class="update-copy">Seleziona la piattaforma che stai usando per continuare con la nuova versione di Horizon.</p>
+
+      <div class="update-grid">
+        <a class="update-option" href="other.html?platform=ios">
+          <strong>iPhone / iPad</strong>
+          <span>Apri la nuova versione nel browser.</span>
+        </a>
+        <a class="update-option" href="android.html">
+          <strong>Android</strong>
+          <span>Segui i passaggi per installare l’APK.</span>
+        </a>
+        <a class="update-option" href="other.html?platform=pc">
+          <strong>PC / Windows</strong>
+          <span>Apri la nuova versione direttamente dal browser.</span>
+        </a>
+      </div>
+
+
+    </section>
+  </main>
+</body>
+</html>

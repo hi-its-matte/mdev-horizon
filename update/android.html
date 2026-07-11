@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aggiornamento Android - Horizon</title>
+  <link rel="stylesheet" href="../css/app.css" />
+  <style>
+    .update-shell {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 36px);
+    }
+
+    .update-card {
+      width: min(760px, 100%);
+      padding: clamp(24px, 5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .update-card ol {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+    }
+
+    .update-card li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .update-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .update-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+    }
+  </style>
+</head>
+<body>
+  <main class="update-shell">
+    <section class="card update-card">
+      <h1 class="auth-title">Installa Horizon su Android</h1>
+      <p class="auth-subtitle">Segui i passaggi qui sotto per installare la nuova versione in modo sicuro.</p>
+
+      <ol>
+        <li>Premi il pulsante qui sotto per scaricare il file APK.</li>
+        <li>Apri la cartella Download e tocca il file APK.</li>
+        <li>Se richiesto, consenti l’installazione di APK da questa sorgente nelle impostazioni del telefono.</li>
+        <li>Completa l’installazione e apri Horizon.</li>
+      </ol>
+
+      <div class="update-actions">
+        <a class="btn-primary" href="https://horizon.mattedev.com/app-release.apk" target="_blank" rel="noopener noreferrer">Scarica APK</a>
+        <a class="btn-secondary" href="index.html">Torna alla scelta</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
